@@ -1,4 +1,6 @@
 import { defineConfig } from 'vitepress';
+import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
+import { mainSidebar, scenesSidebar, arsenalSidebar, techniqueSidebar, prayerSidebar, resourcesSidebar, aboutSidebar } from './sidebar_config'
 
 export default defineConfig({
   lang: 'en-US',
@@ -11,72 +13,57 @@ export default defineConfig({
     ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicons/apple-touch-icon.png' }],
     ['link', { rel: 'manifest', href: '/favicons/manifest.json' }]
   ],
-  
+  vite: {
+  },
+  markdown: {
+    config(md) {
+      md.use(tabsMarkdownPlugin)
+    }
+  },
+  cleanUrls: true,
+  sitemap: {
+    hostname: 'https://blas2guide.vercel.app',
+  },
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
+    returnToTopLabel: 'Back to top', 
     search: {
       provider: 'local'
     },
-
     editLink: {
       pattern: 'https://github.com/PHAredes/Blas2-Speedrun-Guide/tree/main/docs/:path'
     },
 
     nav: [
-      { text: 'Arsenal', link: '/arsenal/' },
-      { text: 'Prayers', link: '/prayers/' },
-      { text: 'Scenes', link: '/scenes/' },
-      { text: 'Techniques', link: '/technique/' }
-    ],
-
-    sidebar: [
       {
-        text: 'Categories',
+        text: 'Guide',
         items: [
-          { text: 'Arsenal of Penitence',
-            link: '/arsenal/',
-            collapsed: true,
-            items: [
-              { text: 'Ruego al Alba', link: '/arsenal/ruego/'},
-              { text: 'Sarmiento & Centella', link: '/arsenal/s&c'},
-              { text: 'Veredicto', link: '/arsenal/veredicto'}
-            ]
-          },
-          { text: 'Chants and Quick Verses', link: '/prayers/' },
-          { text: 'Scene by Scene', link: '/scenes/' },
-          { text: 'Techniques', 
-            link: '/technique/',
-            collapsed: true,
-            items: [
-              { text: 'Glitched', link: '/technique/glitched/'},
-              { text: 'Intended', link: '/technique/intended/'},
-              { text: 'Mirabras Rabbithole', link: '/technique/mirabras_rabbithole/'}
-            ]
-          
-          }
-        ]
+          { text: 'Arsenal', link: '/arsenal/' },
+          { text: 'Prayers', link: '/prayers/' },
+          { text: 'Scenes', link: '/scenes/' },
+          { text: 'Techniques', link: '/technique/' }]
       },
       {
         text: 'Resources',
         items: [
           { text: 'Glossary', link: '/resources/glossary' },
-          { text: 'Additional Resources', link: '/resources/additional_resources' }
+          { text: 'Links', link: '/resources/links'}
         ]
       },
-      {
-        text: 'About',
-        items: [
-          { text: 'Game Versions', link: '/about/game_versions' },
-          { text: 'Contributing', link: '/about/CONTRIBUTING' },
-          { text: 'Credits', link: '/about/CREDITS' },
-          { text: 'License', link: '/about/LICENSE' },
-          { text: 'Disclaimer', link: '/about/DISCLAIMER' },
-        ]
-      },
+      {text: 'About', link: '/about/DISCLAIMER'}
     ],
 
+    sidebar: {
+      '/': mainSidebar(),
+      '/arsenal/': arsenalSidebar(),
+      '/prayers/': prayerSidebar(),
+      '/scenes/': scenesSidebar(),
+      '/technique/': techniqueSidebar(),
+      '/resources/': resourcesSidebar(),
+      '/about/': aboutSidebar()
+    },
+
     footer: {
-      message: 'Released under the MIT License.'
+      message: 'Content under the CC BY-SA 4.0 License. Powered by Vitepress'
     },
 
     socialLinks: [
